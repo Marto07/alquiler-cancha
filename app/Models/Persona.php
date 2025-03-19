@@ -17,4 +17,9 @@ class Persona extends Model
     {
         return $this->hasMany(Documento::class, 'rela_persona');
     }
+
+    public function contactos() 
+    {
+        return $this->hasMany(Contacto::class, 'rela_persona');
+    }
 }

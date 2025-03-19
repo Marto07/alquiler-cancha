@@ -52,9 +52,7 @@ class PersonaController extends Controller
             }
         }
 
-        if ($request->wantsJson()) {
-            return response()->json($persona, 201);
-        }
+        return response()->json($persona, 201);
     }
 
     public function show($id)
