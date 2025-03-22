@@ -12,10 +12,22 @@ class PersonaController extends Controller
 
     public function index(Request $request)
     {
-        $personas = Persona::paginate(1);
+        $registrosPorPagina = $request->input('registros_por_pagina', 10);
+        $paginaActual       = $request->input('pagina');
+
+        $offset = ($paginaActual - 1) * $registrosPorPagina;
+
+        $personas = Persona::skip($offset)->take($registrosPorPagina);
+        $totalRegistros = Persona::count();
+        $totalPaginas   = ($totalRegistros / $registrosPorPagina);
 
         if ($request->wantsJson()) {
-            return response()->json($personas);
+            return response()->json([
+                'registros por pagina'  => $registrosPorPagina,
+                'pagina actual'         => $paginaActual,
+                'paginas necesarias'    => $totalPaginas,
+                'personas'              => $personas,
+            ]);
         } else {
             return view('personas_index', compact('personas'));
         }
@@ -58,16 +70,16 @@ class PersonaController extends Controller
     public function show($id)
     {
         $persona = Persona::find($id);
-        if (is_null($persona)) {
+        if (!$persona) {
             return response()->json(['message' => 'Persona no encontrada'], 404);
         }
-        return response()->json($persona);
+        return response()->json($persona, 201);
     }
 
     public function update(Request $request, $id)
     {
         $persona = Persona::find($id);
-        if (is_null($persona)) {
+        if (!$persona) {
             return response()->json(['message' => 'Persona no encontrada'], 404);
         }
 
@@ -84,6 +96,9 @@ class PersonaController extends Controller
 
         $persona->delete();
         return response()->json(null, 204);
+
+        // O tambien
+        $persona->update(["activo" => false]);
     }
 
 }

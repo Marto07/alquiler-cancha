@@ -18,7 +18,8 @@ class UsuarioController extends Controller
 
     public function show($id)
     {
-        return "Detalle del usuario con id: $id";
+        $usuario = Usuario::find($id);
+        return response()->json(["usuario" => $usuario], 201);
     }
 
     public function store(Request $request)
@@ -62,6 +63,13 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         return "Actualizar el usuario con id: $id";
+        $persona = Usuario::find($id);
+        $oldPersona = $persona;
+        $persona->update($request->all());
+        return response()->json([
+            "persona"           => $persona,
+            "persona antigua"   => $oldPersona,
+        ],201);
     }
 
     public function destroy($id)
