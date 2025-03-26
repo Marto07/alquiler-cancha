@@ -8,18 +8,17 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet" />
     <!-- MDB Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb-icons.min.css" rel="stylesheet" />
-    
     {{-- Aquí irían los CSS y JS particulares de la página --}}
     @yield('extra_stylesheets')
 </head>
 <body>
     <div class="d-flex">
         {{-- Barra de navegación Sidebar --}}
-        {{-- 
-            <aside class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed;">
-                @include('partials.sidebar_bootstrap')
-            </aside>
-        --}}
+        
+        <aside class="bg-dark text-white p-3" style="width: 250px; height: 100vh; position: fixed;">
+            @include('partials.sidebar_bootstrap')
+        </aside>
+       
 
         {{-- Contenido principal --}}
         <div class="flex-grow-1" style="margin-left: 250px;">
@@ -30,11 +29,11 @@
     </div>
 
     {{-- Footer --}}
-    {{-- 
-        <footer class="bg-light text-center py-3 mt-4">
-            @include('partials.footer')
-        </footer>
-    --}}
+
+    <footer class="bg-light text-center py-3 mt-4">
+        @include('partials.footer')
+    </footer>
+
 
     <!-- Bootstrap MDB JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>

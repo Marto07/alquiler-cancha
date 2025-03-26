@@ -31,9 +31,4 @@ class Usuario extends Model
     {
         return $this->contacto ? $this->contacto->descripcion : null;
     }
-
-    public function setPasswordAttribute($value) 
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
 }
