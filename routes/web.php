@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,3 +16,9 @@ Route::get('/login', function () {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/home', [HomeController::class, 'home']);
+
+Route::get('/tablasMaestras', function () {
+    return view('tablasMaestras/tablasMaestras');
+});

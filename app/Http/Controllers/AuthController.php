@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -38,11 +37,16 @@ class AuthController extends Controller
     
         // Verificar si el usuario existe y la contraseña es correcta
         $user = $this->authenticate($request);
-        return response()->json([
-            "input_password" => $request->password,
-            "user_password"  => $user->password,
-            "hash_check"    => Hash::check($request->password, $user->password),
-        ]);
+
+        /* VERIFICAMOS EL USUARIO Y LA CONTRASEÑA
+            return response()->json([
+                "user"         => $user,
+                "input_password" => $request->password,
+                "user_password"  => $user->password,
+                "input_hash"     => Hash::make($request->password),
+                "hash_check"    => Hash::check($request->password, $user->password),
+            ]); 
+        */
 
         if (!$user) {
             return response()->json([
@@ -54,17 +58,20 @@ class AuthController extends Controller
         //iniciar la sesion
         session(["usuario" => $user]);
 
-        if (session()->has('usuario')) {
-            return response()->json([
-                "message" => "Usuario autenticado correctamente",
-                "status"  => 200,
-            ], 200);
-        } else {
-            return response()->json([
-                "message" => "Error al autenticar al usuario",
-                "status"  => 500,
-            ], 500);
-        }
+        return redirect('/home');
+
+        //probamos si se guarda la sesion
+        return response()->json([
+            "message" => "Sesión iniciada correctamente",
+            "usuario" => session("usuario"),
+            "usuario_id" => session("usuario")->id,
+            "status"  => 200,
+        ], 200);
+    
+
+        /* REDIRIGIMOS AL HOME O CUALQUIER OTRO LADO
+            return redirect()->route('home'); 
+        */
     }
 
     public function logout()
@@ -85,17 +92,13 @@ class AuthController extends Controller
             ->first();
             
         if (!$user) {
-        
-            return 'NO HAY USUARIO';
-            // O return false tambien puede ser
+            return null;
         }
 
-        return $user;
-
-        if ($user && Hash::check($request->password, $user->password)) {
-            return "Todo correcto";
+        if (Hash::check($request->password, $user->password)) {
+            return $user;
         } else {
-            return "Contraseña incorrecta";
+            return null;
         }
     }
 }

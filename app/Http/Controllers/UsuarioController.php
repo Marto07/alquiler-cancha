@@ -43,6 +43,21 @@ class UsuarioController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        /* VERIFICAMOS EL USUARIO Y LA CONTRASEÑA
+            return response()->json([
+                'message' => 'Validación exitosa',
+                "datos" => [
+                    "username"      => $request->username,
+                    "password"      => $request->password,
+                    "hash_password" => Hash::make($request->password),
+                    "hash_check"    => Hash::check($request->password, Hash::make($request->password)),
+                    "rela_contacto" => $request->rela_contacto,
+                    "rela_rol"      => $request->rela_rol,
+                ],
+                'status'  => 200,
+            ], 201); 
+        */
+
         $usuario = Usuario::create([
             "username"      => $request->username,
             "password"      => Hash::make($request->password),
@@ -56,7 +71,11 @@ class UsuarioController extends Controller
 
         $usuario->load('contacto', 'rol');
 
-        return response()->json($usuario, 201);
+        return response()->json([
+            "message"       => "Usuario creado correctamente",
+            "usuario"       => $usuario,
+            "status"        => 201,
+        ], 201);
     }
 
     public function update(Request $request, $id)
