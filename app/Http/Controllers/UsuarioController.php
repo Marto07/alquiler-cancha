@@ -21,6 +21,8 @@ class UsuarioController extends Controller
         return "Detalle del usuario con id: $id";
     }
 
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -76,6 +78,11 @@ class UsuarioController extends Controller
             "usuario"       => $usuario,
             "status"        => 201,
         ], 201);
+    }
+
+    public function formularioRegistro()
+    {
+        return view("auth/register");
     }
 
     public function update(Request $request, $id)

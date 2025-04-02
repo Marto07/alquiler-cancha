@@ -24,8 +24,8 @@
             <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
             <div class="col-md-8 col-lg-7 col-xl-6">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                class="img-fluid" alt="Phone image">
+                <img src="{{asset('images/shoot.png')}}"
+                class="img-fluid" alt="Jugador de fútbol">
             </div>
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                 <form action="/login" method="POST">
@@ -66,6 +66,9 @@
 
                     <!-- Submit button -->
                     <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block">Sign in</button>
+                    
+                    <!-- Register button -->
+                    <a href="{{url('formulario-registro')}}" class="btn btn-secondary btn-lg btn-block mt-3">Register</a>
 
                     <div class="divider d-flex align-items-center my-4">
                         <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
