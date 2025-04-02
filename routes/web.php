@@ -33,3 +33,7 @@ Route::get('/tablasMaestras', function () {
 Route::get('/primer-inicio', function() {
     return view('primerInicio');
 });
+
+Route::get('/sublime-merge', function() {
+    return view("sublimeMerge");
+});
