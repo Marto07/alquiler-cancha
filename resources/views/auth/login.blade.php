@@ -16,8 +16,30 @@
     </style>
 </head>
 <body>
-    @if(isset($error) && $error) 
-        <div class="alert alert-danger">{{ $error }}</div>
+    @if (session('message'))
+        <div id="app">
+            <div v-if="showError" class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                <div>
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <ul class="mb-0">
+
+                        @if (session('message'))
+                            <li>{{ session('message') }}</li>
+                            @if (session('errors'))
+                                <ul class="mb-0">
+                                    @foreach (session('errors') as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        @endif
+
+                        
+                    </ul>
+                </div>
+                <button @click="showError = false" class="btn-close btn-sm" aria-label="Close"></button>
+            </div>
+        </div>
     @endif
     <div>
         <section class="vh-100">
@@ -30,6 +52,7 @@
             <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                 <form action="/login" method="POST">
                     @csrf
+
                     <!-- Email input -->
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input 
@@ -90,5 +113,15 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    showError: true
+                };
+            }
+        }).mount("#app");
+    </script>
 </body>
 </html>

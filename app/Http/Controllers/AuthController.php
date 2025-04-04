@@ -6,16 +6,21 @@ use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class AuthController extends Controller
 {
     //
+    public function showLoginForm()
+    {
+        return view('auth/login');
+    }
     public function login(Request $request)
     {
         // Validar datos
         $validator = Validator::make($request->all(), [
-            'email'      => 'required|email|max:50',
-            'password' => 'required|min:8|max:50'
+            'email'         => 'required|email|max:50',
+            'password'      => 'required|min:8|max:50'
         ],
         [
             'email.required'      => 'El email es requerido',
@@ -29,30 +34,26 @@ class AuthController extends Controller
         if ($validator->fails()) {
             $data = [
                 "message" => "Error en la validación de los datos",
-                "errors"  => $validator->errors(),
-                "status"  => 400,
+                "errors"  => $validator->errors()->all(),
+                "success" => false,
             ];
-            return response()->json($data, 400);
+
+            // return response()->json($data, 400);
+            return redirect()->route('login')->with($data);
         }
     
         // Verificar si el usuario existe y la contraseña es correcta
         $user = $this->authenticate($request);
 
-        /* VERIFICAMOS EL USUARIO Y LA CONTRASEÑA
-            return response()->json([
-                "user"         => $user,
-                "input_password" => $request->password,
-                "user_password"  => $user->password,
-                "input_hash"     => Hash::make($request->password),
-                "hash_check"    => Hash::check($request->password, $user->password),
-            ]); 
-        */
-
         if (!$user) {
-            return response()->json([
+            $data = [
                 "message" => "Credenciales incorrectas o el usuario no existe",
+                "success" => false,
                 "status"  => 401,
-            ], 401);
+            ];
+
+            // return response()->view('auth/credencialesIncorrectas', compact('data'), 401);
+            return redirect()->route('login')->with($data);
         }
     
         //iniciar la sesion
@@ -60,18 +61,6 @@ class AuthController extends Controller
 
         return redirect('/home');
 
-        //probamos si se guarda la sesion
-        return response()->json([
-            "message" => "Sesión iniciada correctamente",
-            "usuario" => session("usuario"),
-            "usuario_id" => session("usuario")->id,
-            "status"  => 200,
-        ], 200);
-    
-
-        /* REDIRIGIMOS AL HOME O CUALQUIER OTRO LADO
-            return redirect()->route('home'); 
-        */
     }
 
     public function logout()

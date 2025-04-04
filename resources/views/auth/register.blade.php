@@ -18,32 +18,33 @@
 <body>
     <div id="app">
         <div class="container mt-5">
-            <form @submit.prevent="submitForm">
+            <form method="POST" action="{{ route('usuarioStore') }}" >
+                @csrf
                 <!-- Paso 1: Datos personales -->
                 <div class="step-container" v-bind:class="{ 'active': currentStep === 1 }">
                     <h4 class="mb-4">Paso 1: Datos personales</h4>
                     <div class="form-group">
                         <label for="firstName">Nombre</label>
-                        <input type="text" id="firstName" v-model="form.firstName" class="form-control" required>
+                        <input type="text" id="firstName"  class="form-control" name="nombre">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Apellido</label>
-                        <input type="text" id="lastName" v-model="form.lastName" class="form-control" required>
+                        <input type="text" id="lastName"  class="form-control" name="apellido">
                     </div>
                     <div class="form-group">
                         <label for="document">Documento</label>
-                        <input type="text" id="document" v-model="form.document" class="form-control" required>
+                        <input type="text" id="document"  class="form-control" name="documento">
                     </div>
                     <div class="form-group">
                         <label for="documentType">Tipo de documento</label>
-                        <select id="documentType" v-model="form.documentType" class="form-control" required>
+                        <select id="documentType"  class="form-control" name="tipo_documento">
                             <option value="dni">DNI</option>
                             <option value="passport">Pasaporte</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="gender">Sexo</label>
-                        <select id="gender" v-model="form.gender" class="form-control" required>
+                        <select id="gender"  class="form-control" name="sexo">
                             <option value="male">Masculino</option>
                             <option value="female">Femenino</option>
                         </select>
@@ -56,19 +57,19 @@
                     <h4 class="mb-4">Paso 2: Datos del usuario</h4>
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
-                        <input type="text" id="username" v-model="form.username" class="form-control" required>
+                        <input type="text" id="username"  class="form-control" name="nombre_usuario">
                     </div>
                     <div class="form-group">
                         <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" v-model="form.email" class="form-control" required>
+                        <input type="email" id="email"  class="form-control" name="correo">
                     </div>
                     <div class="form-group">
                         <label for="password">Contraseña</label>
-                        <input type="password" id="password" v-model="form.password" class="form-control" required>
+                        <input type="password" id="password"  class="form-control" name="contrasena">
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirmar Contraseña</label>
-                        <input type="password" id="confirmPassword" v-model="form.confirmPassword" class="form-control" required>
+                        <input type="password" id="confirmPassword"  class="form-control" name="confirmar_contrasena">
                     </div>
                     <button type="button" class="btn btn-secondary mt-3" @click="prevStep">Anterior</button>
                     <button type="submit" class="btn btn-primary mt-3">Finalizar</button>
@@ -82,18 +83,7 @@
             el: '#app',
             data() {
                 return {
-                    currentStep: 1,
-                    form: {
-                        firstName: '',
-                        lastName: '',
-                        document: '',
-                        documentType: 'dni',
-                        gender: 'male',
-                        username: '',
-                        email: '',
-                        password: '',
-                        confirmPassword: ''
-                    }
+                    currentStep: 1
                 };
             },
             methods: {
@@ -106,16 +96,6 @@
                     if (this.currentStep > 1) {
                         this.currentStep--;
                     }
-                },
-                submitForm() {
-                    if (this.form.password !== this.form.confirmPassword) {
-                        alert('Las contraseñas no coinciden');
-                        return;
-                    }
-
-                    console.log('Formulario enviado:', this.form);
-                    alert('Formulario enviado exitosamente');
-                    // Aquí iría la lógica de envío del formulario (puedes hacer un POST a tu servidor)
                 }
             }
         });
