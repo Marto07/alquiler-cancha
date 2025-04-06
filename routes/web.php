@@ -9,6 +9,9 @@ use App\Http\Controllers\UsuarioController;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 /*Route::prefix('/personas')->group(function () {
     
