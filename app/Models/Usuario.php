@@ -12,10 +12,10 @@ class Usuario extends Model
 
     protected $fillable = [
         'username', 'password', 'rela_contacto', 'rela_rol', 
-        'verificacion', 'token', 'token_expira','activo'
+        'verificacion', 'token', 'token_expira_en','activo'
     ];
 
-    protected $hidden = ['password', 'token', 'token_expira']; // Ocultamos password y tokens
+    protected $hidden = ['password', 'token', 'token_expira_en']; // Ocultamos password y tokens
 
     public function contacto() 
     {

@@ -70,19 +70,6 @@ class UsuarioController extends Controller
         ], 201);
     }
 
-    public function formularioRegistro()
-    {
-        return view("auth/register");
-    }
-
-    public function recibirFormularioRegistro(Request $request)
-    {
-        return response()->json([
-            "success" => true,
-            "usuario" => $request->all(),
-        ], 200);
-    }
-
     public function registrarUsuario(Request $request)
     {
         return response()->json([

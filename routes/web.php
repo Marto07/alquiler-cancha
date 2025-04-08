@@ -6,9 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -24,8 +22,8 @@ Route::get('/login',    [AuthController::class, 'showLoginForm'])->name('login')
 Route::post('/login',   [AuthController::class, 'login']);
 
 // REGISTRO USUARIO
-Route::get('/formulario-registro', [UsuarioController::class, 'formularioRegistro']);
-Route::post('/registrar-usuario', [UsuarioController::class, 'recibirFormularioRegistro'])->name('usuarioStore');
+Route::get('/formulario-registro', [AuthController::class, 'showRegisterForm'])->name('formularioRegistro');
+Route::post('/registrar-usuario', [AuthController::class, 'recibirFormularioRegistro'])->name('procesarRegistro');
 
 // INICIO
 Route::get('/home', [HomeController::class, 'home']);

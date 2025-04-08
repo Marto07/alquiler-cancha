@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('persona', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('apellido');
-            $table->date('fecha_nacimiento');
-            $table->boolean('activo')->default(true);
+            $table->string('nombre')->nullable();
+            $table->string('apellido')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->unsignedBigInteger('rela_sexo')->nullable();
+            $table->foreign('rela_sexo')->references('id')->on('sexo')->onDelete('restrict');
+            $table->boolean('activo')->default(true)->nullable();
             $table->timestamps();
         });
     }

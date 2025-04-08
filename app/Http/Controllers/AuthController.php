@@ -15,6 +15,82 @@ class AuthController extends Controller
     {
         return view('auth/login');
     }
+
+    public function showRegisterForm()
+    {
+        return view('auth/register');
+    }
+
+    public function recibirFormularioRegistro(Request $request)
+    {
+        // Validar datos
+        $validator = Validator::make($request->all(), [
+            'username'          => 'required|unique:usuario,username',
+            'password'          => 'required|min:8|max:50',
+            'email'             => 'required|email|max:50',
+            'nombre'            => 'required|max:50',
+            'apellido'          => 'required|max:50',
+            'documento'         => 'required|string|max:50',
+            'tipo_documento'    => 'required|exists:tipo_documento,id|integer',
+            // 'fecha_nacimiento'  => 'required|date',
+            'sexo'              => 'required|exists:sexo,id|integer',
+        ],
+        [
+            'username.required'         => 'El campo username es obligatorio',
+            'username.unique'           => 'El campo username debe ser único',
+            'password.required'         => 'La contraseña es requerida',
+            'password.min'              => 'La contraseña debe tener mínimo 8 caracteres',
+            'password.max'              => 'La contraseña debe tener máximo 50 caracteres',
+            'email.required'            => 'El email es requerido',
+            'email.email'               => 'El email debe ser un correo electrónico',
+            'email.max'                 => 'El email debe tener máximo 50 caracteres',
+            'nombre.required'           => 'El nombre es requerido',
+            'nombre.max'                => 'El nombre debe tener máximo 50 caracteres',
+            'apellido.required'         => 'El apellido es requerido',
+            'apellido.max'              => 'El apellido debe tener máximo 50 caracteres',
+            // 'fecha_nacimiento.required' => 'La fecha de nacimiento es requerida',
+            // 'fecha_nacimiento.date'     => 'La fecha de nacimiento debe ser una fecha válida',
+            'sexo.required'             => 'El sexo es requerido',
+            'sexo.exists'               => 'El sexo no existe en la tabla sexo',
+            'sexo.integer'              => 'El sexo debe ser un número entero',
+            'documento.required'        => 'El documento es requerido',
+            'documento.string'          => 'El documento debe ser una cadena de texto',
+            'documento.max'             => 'El documento debe tener máximo 50 caracteres',
+            'tipo_documento.required'   => 'El tipo de documento es requerido',
+            'tipo_documento.exists'     => 'El tipo de documento no existe en la tabla tipo_documento',
+            'tipo_documento.integer'    => 'El tipo de documento debe ser un número entero',
+            // Otros mensajes de error...
+        ]);
+
+        if ($validator->fails()) {
+            
+            $data = [
+                "message" => "Error en la validacion de los datos",
+                "errors"  => $validator->errors()->all(),
+                "success" => false,
+            ];
+            return redirect('formulario-registro')->with($data);
+            return response()->json($data, 400);
+
+            //esta es la salida deseada, pero estamos probando
+            // return redirect()->route('formularioRegistro')->with($data);
+        }
+        // Creamos el usuario
+        // ... codigo de creacion de usuario ...
+
+        $data = [
+            "message" => "Usuario creado correctamente",
+            "success" => true,
+        ];
+        return redirect()->route('login')->with($data);
+
+        //probamos ver los datos en json
+        return response()->json([
+            "success" => true,
+            "usuario" => $request->all(),
+        ], 200);
+    }
+
     public function login(Request $request)
     {
         // Validar datos

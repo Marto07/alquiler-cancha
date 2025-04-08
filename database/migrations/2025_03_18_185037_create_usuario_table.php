@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('rela_rol')->constrained('rol')->onDelete('restrict');
             $table->boolean('activo')->default(true);
             $table->text('token')->nullable();
-            $table->timestamp('token_expira')->nullable();
+            $table->timestamp('token_expira_en')->nullable();
             $table->timestamps();
         });
     }

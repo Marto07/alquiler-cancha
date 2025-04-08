@@ -16,9 +16,34 @@
     </style>
 </head>
 <body>
+    @if (session('message'))
+        <div id="app2">
+            <div v-if="showError" class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+                <div>
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <ul class="mb-0">
+
+                        @if (session('message'))
+                            <li>{{ session('message') }}</li>
+                            @if (session('errors'))
+                                <ul class="mb-0">
+                                    @foreach (session('errors') as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            @endif
+                        @endif
+
+                        
+                    </ul>
+                </div>
+                <button @click="showError = false" class="btn-close btn-sm" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
     <div id="app">
         <div class="container mt-5">
-            <form method="POST" action="{{ route('usuarioStore') }}" >
+            <form method="POST" action="{{ route('procesarRegistro') }}" >
                 @csrf
                 <!-- Paso 1: Datos personales -->
                 <div class="step-container" v-bind:class="{ 'active': currentStep === 1 }">
@@ -38,15 +63,15 @@
                     <div class="form-group">
                         <label for="documentType">Tipo de documento</label>
                         <select id="documentType"  class="form-control" name="tipo_documento">
-                            <option value="dni">DNI</option>
-                            <option value="passport">Pasaporte</option>
+                            <option value="1">DNI</option>
+                            <option value="2">Pasaporte</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="gender">Sexo</label>
                         <select id="gender"  class="form-control" name="sexo">
-                            <option value="male">Masculino</option>
-                            <option value="female">Femenino</option>
+                            <option value="1">Masculino</option>
+                            <option value="2">Femenino</option>
                         </select>
                     </div>
                     <button type="button" class="btn btn-primary mt-3" @click="nextStep">Siguiente</button>
@@ -57,19 +82,19 @@
                     <h4 class="mb-4">Paso 2: Datos del usuario</h4>
                     <div class="form-group">
                         <label for="username">Nombre de usuario</label>
-                        <input type="text" id="username"  class="form-control" name="nombre_usuario">
+                        <input type="text" id="username"  class="form-control" name="username">
                     </div>
                     <div class="form-group">
                         <label for="email">Correo electrónico</label>
-                        <input type="email" id="email"  class="form-control" name="correo">
+                        <input type="email" id="email"  class="form-control" name="email">
                     </div>
                     <div class="form-group">
                         <label for="password">Contraseña</label>
-                        <input type="password" id="password"  class="form-control" name="contrasena">
+                        <input type="password" id="password"  class="form-control" name="password">
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirmar Contraseña</label>
-                        <input type="password" id="confirmPassword"  class="form-control" name="confirmar_contrasena">
+                        <input type="password" id="confirmPassword"  class="form-control" name="confirm_password">
                     </div>
                     <button type="button" class="btn btn-secondary mt-3" @click="prevStep">Anterior</button>
                     <button type="submit" class="btn btn-primary mt-3">Finalizar</button>
@@ -100,7 +125,15 @@
             }
         });
     </script>
-
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    showError: true
+                };
+            }
+        }).mount("#app2");
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.2/mdb.min.js"></script>
 </body>
 </html>
