@@ -18,7 +18,11 @@
 <body>
     @if (session('message'))
         <div id="app">
-            <div v-if="showError" class="alert alert-danger d-flex justify-content-between align-items-center" role="alert">
+            <div 
+                v-if="showError" 
+                class="alert {{ session('success') ? 'alert-success' : 'alert-danger' }} d-flex justify-content-between align-items-center" 
+                role="alert"
+            >
                 <div>
                     <i class="fas fa-exclamation-circle me-2"></i>
                     <ul class="mb-0">

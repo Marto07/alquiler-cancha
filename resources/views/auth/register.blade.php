@@ -45,6 +45,7 @@
         <div class="container mt-5">
             <form method="POST" action="{{ route('procesarRegistro') }}" >
                 @csrf
+                @method('POST')
                 <!-- Paso 1: Datos personales -->
                 <div class="step-container" v-bind:class="{ 'active': currentStep === 1 }">
                     <h4 class="mb-4">Paso 1: Datos personales</h4>
@@ -60,12 +61,17 @@
                         <label for="document">Documento</label>
                         <input type="text" id="document"  class="form-control" name="documento">
                     </div>
+                    
                     <div class="form-group">
-                        <label for="documentType">Tipo de documento</label>
+                        <label for="tipo_documento">Tipo de documento</label>
                         <select id="documentType"  class="form-control" name="tipo_documento">
                             <option value="1">DNI</option>
                             <option value="2">Pasaporte</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                        <input type="date" id="fecha_nacimiento"  class="form-control" name="fecha_nacimiento">
                     </div>
                     <div class="form-group">
                         <label for="gender">Sexo</label>
