@@ -1,4 +1,4 @@
-<div class="d-flex flex-column align-items-start">
+<div class="d-flex flex-column align-items-start h-100">
     <!-- Logo / Título del sistema -->
     <div class="text-center w-100 mb-4">
         <h4 class="text-white">Mi Sistema</h4>
@@ -36,11 +36,13 @@
                 <i class="fas fa-cogs me-2"></i> Configuración
             </a>
         </li>
-        <li class="nav-item">
-            <a href="/logout" class="nav-link text-white">
-                <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
-            </a>
-        </li>
     </ul>
+
+    <!-- Botón cerrar sesión abajo -->
+    <div class="w-100 mt-auto">
+        <a href="{{ route('logout') }}" class="nav-link text-white">
+            <i class="fas fa-sign-out-alt me-2"></i> Cerrar sesión
+        </a>
+    </div>
 </div>
 

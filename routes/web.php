@@ -20,6 +20,7 @@ Route::get('/personas', [PersonaController::class, 'index']);
 // LOGIN
 Route::get('/login',    [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login',   [AuthController::class, 'login']);
+Route::get('/cerrar-sesion', [AuthController::class, 'logout'])->name('logout');
 
 // REGISTRO USUARIO
 Route::get('/formulario-registro', [AuthController::class, 'showRegisterForm'])->name('formularioRegistro');

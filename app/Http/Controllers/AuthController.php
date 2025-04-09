@@ -128,10 +128,7 @@ class AuthController extends Controller
     public function logout()
     {
         session()->flush();
-        return response()->json([
-            "message" => "Sesión cerrada correctamente",
-            "status"  => 200,
-        ], 200);
+        return $this->redirectResponse('/login', true, "Sesion cerrada exitosamente");
     }
 
     private function authenticate(Request $request) {
